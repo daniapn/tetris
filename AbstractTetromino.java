@@ -17,33 +17,42 @@ public abstract class AbstractTetromino implements Tetromino {
     public Position[] getBlocks() {
         return blocks;
     }
-    // Method untuk mengembalikan array posisi blok-blok tetromino saat ini
+    // Method getter untuk mengembalikan array posisi blok-blok tetromino saat ini
 
     public Color getColor() {
         return color;
     }
-    // Method untuk mengembalikan warna dari tetromino
+    // Method getter untuk mengembalikan warna dari tetromino
 
     public void move(int dx, int dy) {
         // Method untuk memindahkan semua blok dalam tetromino sebanyak dx (horizontal) dan dy (vertikal)
         for (Position p : blocks) {
-            p.setX(p.getX() + dx); // Geser x sebesar dx
-            p.setY(p.getY() + dy); // Geser y sebesar dy
+            p.setX(p.getX() + dx); // Geser posisi x sebesar dx
+            p.setY(p.getY() + dy); // Geser posisi y sebesar dy
         }
     }
 
+    // ==== METHOD OVERLOADING ====
+    public void move(Position delta) {
+        // Ini adalah versi overloaded dari method move()
+        // Memungkinkan pemanggilan move dengan objek Position (delta) daripada dua nilai terpisah dx dan dy
+        move(delta.getX(), delta.getY()); // Memanggil method move(dx, dy) dengan nilai dari delta
+    }
+
     public Position[] getMovedBlocks(int dx, int dy) {
-        // Method untuk mengembalikan array posisi baru dari tetromino jika digeser tanpa mengubah posisi aslinya
+        // Method untuk mengembalikan array posisi baru dari tetromino jika digeser
+        // Tidak mengubah posisi aslinya, hanya simulasi pergerakan
+
         Position[] moved = new Position[blocks.length];
-        // Buat array baru dengan panjang yang sama dengan jumlah blok
+        // Buat array baru dengan panjang yang sama seperti jumlah blok
 
         for (int i = 0; i < blocks.length; i++) {
-            // Untuk setiap blok dalam tetromino...
+            // Iterasi setiap blok dalam tetromino
             moved[i] = new Position(blocks[i].getX() + dx, blocks[i].getY() + dy);
-            // Buat blok baru dengan posisi hasil penambahan dx dan dy
+            // Buat blok baru dengan posisi yang telah digeser dx dan dy
         }
 
         return moved;
-        // Kembalikan array hasil posisi yang sudah digeser
+        // Kembalikan array berisi posisi blok-blok hasil geseran
     }
 }
